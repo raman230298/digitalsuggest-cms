@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "digitalsuggest-cms",
+  "compatibility_date": "2024-11-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "pages_build_output_dir": "dist",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "digitalsuggest-emdash",
+      "database_id": "061ed55d-e3c1-4290-a705-5fe6913ba1ab"
+    }
+  ]
+}
