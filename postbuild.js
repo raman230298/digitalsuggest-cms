@@ -3,15 +3,34 @@ import path from 'path';
 
 const distDir = path.resolve('dist');
 const wranglerJson = path.join(distDir, 'server', 'wrangler.json');
+
 if (fs.existsSync(wranglerJson)) {
-  fs.unlinkSync(wranglerJson);
-  console.log('Removed dist/server/wrangler.json to prevent Pages reserved ASSETS clash.');
+  try {
+    const cfg = JSON.parse(fs.readFileSync(wranglerJson, 'utf8'));
+    // Remove bindings that cause Cloudflare Pages validation errors
+    delete cfg.assets;
+    delete cfg.kv_namespaces;
+    if (cfg.previews) delete cfg.previews.kv_namespaces;
+    fs.writeFileSync(wranglerJson, JSON.stringify(cfg, null, 2), 'utf8');
+    console.log('Sanitized dist/server/wrangler.json for Cloudflare Pages compatibility.');
+  } catch (err) {
+    console.error('Failed to sanitize wrangler.json:', err);
+  }
 }
 
+// Clean any temporary wrangler deploy configs
+const dotWranglerDeploy = path.resolve('.wrangler', 'deploy');
+if (fs.existsSync(dotWranglerDeploy)) {
+  fs.rmSync(dotWranglerDeploy, { recursive: true, force: true });
+  console.log('Cleaned .wrangler/deploy configuration.');
+}
+
+// Bridge _worker.js for Pages Advanced mode
 const workerJs = path.join(distDir, '_worker.js');
 fs.writeFileSync(workerJs, 'export { default } from "./server/entry.mjs";\n', 'utf8');
-console.log('Generated dist/_worker.js bridging Pages Advanced mode to Astro server entry.');
+console.log('Generated dist/_worker.js bridging Pages Advanced mode.');
 
+// Synchronize static client assets into dist root
 function copyDir(src, dest) {
   if (!fs.existsSync(src)) return;
   for (const f of fs.readdirSync(src)) {
@@ -31,4 +50,4 @@ if (fs.existsSync(clientDir)) {
   copyDir(clientDir, distDir);
   console.log('Synchronized client static assets into dist/ root.');
 }
-console.log('Postbuild finished successfully.');
+console.log('Postbuild completed successfully.');
