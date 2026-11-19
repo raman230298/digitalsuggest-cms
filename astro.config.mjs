@@ -16,7 +16,6 @@ export default defineConfig({
     react(),
     emdash({
       siteUrl: 'https://cms.digitalsuggest.com',
-      allowedOrigins: ['https://cms.digitalsuggest.com', 'https://digitalsuggest-cms.pages.dev'],
       database: d1({ binding: 'DB' }),
     }),
   ],
