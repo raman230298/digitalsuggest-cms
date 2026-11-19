@@ -9,8 +9,14 @@ if (fs.existsSync(wranglerJson)) {
     const cfg = JSON.parse(fs.readFileSync(wranglerJson, 'utf8'));
     // Remove bindings that cause Cloudflare Pages validation errors
     delete cfg.assets;
-    delete cfg.kv_namespaces;
-    if (cfg.previews) delete cfg.previews.kv_namespaces;
+    if (cfg.previews) delete cfg.previews.assets;
+    // Ensure SESSION KV namespace is configured
+    cfg.kv_namespaces = [
+      {
+        binding: "SESSION",
+        id: "208971ab196a4f5994d4598d5c173ee8"
+      }
+    ];
     fs.writeFileSync(wranglerJson, JSON.stringify(cfg, null, 2), 'utf8');
     console.log('Sanitized dist/server/wrangler.json for Cloudflare Pages compatibility.');
   } catch (err) {
