@@ -1,0 +1,44 @@
+{
+  "$schema": "https://emdashcms.com/seed.schema.json",
+  "version": "1",
+  "defaultLocale": "en",
+  "meta": {
+    "name": "DigitalSuggest",
+    "description": "DigitalSuggest Blog & Content Management",
+    "author": "DigitalSuggest"
+  },
+  "settings": {
+    "title": "DigitalSuggest",
+    "tagline": "Smarter digital solutions built around real business problems"
+  },
+  "taxonomies": [
+    {
+      "name": "category",
+      "label": "Categories",
+      "labelSingular": "Category",
+      "hierarchical": true,
+      "collections": ["posts"],
+      "terms": [
+        { "slug": "search-seo", "label": "Search & SEO" },
+        { "slug": "ai-automation", "label": "AI & Automation" },
+        { "slug": "digital-strategy", "label": "Digital Strategy" }
+      ]
+    }
+  ],
+  "content": {
+    "posts": [
+      {
+        "id": "post-google-core-update",
+        "slug": "google-november-2026-core-update-what-changed",
+        "status": "published",
+        "data": {
+          "title": "Google November 2026 Core Update: What Changed, Why It Matters and What to Do Now",
+          "excerpt": "Google started rolling out its November 2026 core update on November 10. Here is what changed, why it matters, common myths, and the exact step-by-step action plan to follow."
+        },
+        "taxonomies": {
+          "category": ["search-seo"]
+        }
+      }
+    ]
+  }
+}
