@@ -1,0 +1,24 @@
+{
+  "name": "digitalsuggest-cms",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build && node postbuild.js",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^14.4.9",
+    "@astrojs/node": "^11.1.14",
+    "@astrojs/react": "^7.1.9",
+    "@emdash-cms/cloudflare": "^1.5.0",
+    "astro": "^7.4.13",
+    "emdash": "^1.5.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.165.0"
+  }
+}
